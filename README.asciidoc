@@ -1,0 +1,98 @@
+Collect-a-Timeline
+==================
+
+"Collect-a-Timeline" is a project intended to facilitate
+giving especially children a sense of history and chronology.
+
+It consists of two parts: a timeline to put up on a wall or similar,
+and a set of cards standing for historical events.
+
+Both parts are provided as PDFs.
+
+Timeline
+--------
+
+The timeline is printed on ? x 4 sheets of A4 paper (about ? x 120 cm).
+
+It is a long line; each year takes up 2mm.
+
+(The following is a brief description of its form; see the details in
+TimelineGeometry.asciidoc.)
+
+The bottom part (unfolded line) is approx. 500 years, to 1500 AD.
+The previous part (back,forth,back) goes back to approx. 1 AD.
+The previous part is tighly folded, and goes back to approx. 10.000 BC.
+(The end of the last glacial period is 12.000 BC.)
+
+The previous part begins to employ the 3rd dimension (which is necessary
+for representing deep time); it runs along a wall into the picture
+and goes back to about 2 mio BC.
+
+And the previous part runs on (the illusion of) a far wall, and goes back
+to roughly 100 mio BC.
+
+Event Cards
+-----------
+
+=== Inventions
+
+- Invention of the press
+- Invention of hot-air balloon
+- Invention of heavier-than-air flight
+- Invention of telescope
+- Invention of microscope
+- Invention of telephone
+- Invention of the bicycle
+- Invention of the automobile
+- Invention of photography
+- Invention of moving pictures
+- Invention of colour photography
+- Invention of radio (signals through air)
+- Invention of radio (sound through air)
+- Invention of television
+- Invention of color television
+- Invention of refrigerator/freezer
+- First digital computer
+- First mobile phone
+- First laptop
+- GPS in place
+- First satellite
+- First human in space
+- Moon landing
+- First probe to Venus
+- First probe to Mars
+
+=== Scientific discoveries
+- Biological cells
+- Circulation of blood
+- Germ theory
+- Heliocentric world system
+- New planets
+- Sun is a star
+- Extrasolar planets
+
+=== Historical events
+- First world war
+- Second world war
+- Viking age
+- Medieval times
+- Renaissance
+- Discovery of America
+- Building of pyramids
+
+=== Human civilization
+- First anatomically modern humans (200,000BC)
+- Taming of fire (100-50,000BC)
+- Agriculture
+- Domestication of animals
+- Stone age
+- The wheel
+- Use of metals (bronze age, iron age)
+- Invention of writing
+- Invention of paper
+
+=== Evolution
+- Birds
+- Reptiles
+- Misc. specific dinosaurs
+- Jurassic extinction event

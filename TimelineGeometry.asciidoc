@@ -1,0 +1,85 @@
+Timeline geometry
+=================
+
+Getting both the technological history of the 19th and 20th century
+and deep time (especially, the end of the dinasaur age at the extinction event
+65 mio BC) on the same timeline, with (at least nominally) equi-spaced years,
+is a challenge -- and therefore a couple of tricks have been employed.
+
+First, of course, the long early part of the timeline has been folded up.
+Secondly -- because even folding doesn't compress enough -- an illusion
+of the third dimension has been added, giving further compression.
+
+Getting room for it all
+-----------------------
+
+=== Basic time scale
+
+Each year takes up 2mm.
+This yields 500 years per meter, or 20cm per century, which makes
+the 19th and 20th centuries pretty crowded with noteworthy events,
+but hopefully not overly so.
+
+Using this time scale, 65 million years becomes 130,000 meters.
+
+=== Folding
+
+Folding is done side-to-side on an A4 sheet.
+The line is zig-zagged with a breadth of 20cm (giving 20cm/0.2cm=100y/zig);
+the zig-zag is spaced 2mm apart (giving 100y/zig / 0.2cm = 500y/cm, or 50ky/m).
+
+Using this folding, 65 million years is compressed into 1,300 meters.
+
+=== Perspective
+
+The third dimension is faked, aiming at the illusion of a rather large hall,
+40m long.
+The perspective is constructed so as to fit an eye-to-paper distance of about
+0.8m.
+This means that the far wall is 1:50 of the near wall, yielding
+a further compression (giving 2.5 My/m).
+
+Using perspective, 65 million years becomes 26 meters.
+
+=== Re-folding
+
+The folded timeline (now 4mm wide) is run back and forth of the
+(thankfully quite high) far wall. With the far wall having an apparent width
+of approximately 0.8m, and 2 runs (zags?) per cm, this gives 4 million
+years per vertical cm.
+
+With re-folding, 65 million years becomes 16.25 vertical centimeters,
+which is finally within a practical range.
+
+
+Timeline course
+---------------
+
+Of each A4 sheet, 27.5cm x 20cm is assumed usable.
+This gives 110cm x 80cm in total.
+
+The sheets are named A1-D4 as follows:
+
+........................................
+  +.......+.......+.......+.......+ (110,80)
+  :       :       :       :       :
+D :       :       :       :       :
+  +.......+.......+.......+.......+
+  :       :       :       :       :
+C :       :       :       :       :
+  +.......+.......+.......+.......+
+  :       :       :       :       :
+B :       :       :       :       :
+  +.......+.......+.......+.......+
+  :       :       :       :       :
+A :       :       :       :       :
+  +.......+.......+.......+.......+
+(0,0)  1       2       3       4
+........................................
+
+Sheets A1-A4 show 1500AD - present.
+Sheets B1-B4 show 1AD - 1500AD.
+
+The far wall is at (5,40) to (85,80) -- 80cm x 40cm in total.
+The right-hand wall-into-depth is at (85,_) to (95,_)
+The vanishing point is at y=45; we can derive x=84.75.

@@ -1,0 +1,7 @@
+# Generated files:
+*.pdf
+*.ps
+
+# Backup files:
+*~
+*.bak*
