@@ -1,6 +1,7 @@
 #!/usr/bin/python-2.6
 
 from psutil import ps_header, ps_trailer, setlinewidth, moveto, coord, size, rlineto, stroke, textover
+from sys import stderr
 
 PWIDTH=842
 PHEIGHT=596
@@ -16,7 +17,18 @@ PART1_XMAX = 3.8
 PART2_MINY = 1.2
 PART2_DELTAY = 0.3
 
-def main():
+# Categories:
+CATEGORY = {
+    'DISC': {'color': 'setDISCcolor'},
+    'INV' : {'color': 'setINVcolor'},
+    'NAT' : {'color': 'setNATcolor'},
+    'HIST': {'color': 'setHISTcolor'},
+    'TRAV': {'color': 'setTRAVcolor'},
+    'ART' : {'color': 'setARTcolor'}
+}
+
+
+def main(data_filename):
     defs="""
     /relpoint { <<>> begin
     % Input: dx dy
@@ -58,12 +70,20 @@ def main():
     pushpoint lineto
     closepath
     end } bind def
+
+    /setDISCcolor {1.0 0.85 0  setrgbcolor} bind def  % Yellow
+    /setINVcolor  {0.4 0.4 0.8 setrgbcolor} bind def  % Blue
+    /setNATcolor  {0.1 0.8 0.1 setrgbcolor} bind def  % Green
+    /setHISTcolor {0.8 0.0 0.0 setrgbcolor} bind def  % Red
+    /setTRAVcolor {0.6 0.2 0.6 setrgbcolor} bind def  % Purple
+    /setARTcolor  {0.7 0.3 0.0 setrgbcolor} bind def  % Brown
     """
     ps_header(1, defs)
-    cards_page()
+    #cards_test_page()
+    cards_page(data_filename)
     ps_trailer()
 
-def cards_page():
+def cards_test_page():
     coord(10*MM, 10*MM); print "translate"
     print "12 SelectFontSize"
 
@@ -113,4 +133,36 @@ def cards_page():
     print "roundbox stroke"
     moveto((200+15)*MM, (40+3)*MM); textover("Travel")
 
-main()
+    # Brown:
+    print("0.7 0.3 0.0 setrgbcolor")
+    moveto(240*MM,0)
+    coord(30*MM, 40*MM)
+    size(5*MM)
+    print "roundbox stroke"
+    moveto((240+15)*MM, (40+3)*MM); textover("Artefact")
+
+def cards_page(data_filename):
+    with open(data_filename) as f:
+        for line in f:
+            line = line.strip()
+            if (line=="") or (line[0] == "#"):
+                continue
+                #print "Skipping <%s>" % (line,)
+            #print "line: %s (first: <%s>)" % (line,line[0])
+            toks = line.split(":", 4)
+            #print "toks: %s" % (toks,)
+            toks = map(lambda x: x.strip(), toks)
+            print "toks2: %s" % (toks,)
+            if len(toks)<4:
+                stderr.write("Format error: <%s>\n" % (line,))
+                exit(1)
+            catname = toks[0]
+            year = toks[1]
+            img  = toks[2]
+            text = toks[3]
+            if not CATEGORY.has_key(catname):
+                stderr.write("Unknown category: <%s>\n" % (catname,))
+                exit(1)
+            category = CATEGORY[catname]
+
+main("cards.dat")
