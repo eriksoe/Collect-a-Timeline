@@ -6,10 +6,10 @@ from sys import stderr
 PWIDTH=842
 PHEIGHT=596
 MM = 360/127.0
-YEAR = 2*MM
-YEAR_TICK = 1*MM
-DECADE_TICK = 1.75*MM
-CENTURY_TICK = 2.5*MM
+# YEAR = 2*MM
+# YEAR_TICK = 1*MM
+# DECADE_TICK = 1.75*MM
+# CENTURY_TICK = 2.5*MM
 
 # Timeline geometry:
 PART1_Y = 0.5
@@ -30,6 +30,9 @@ CATEGORY = {
 
 def main(data_filename):
     defs="""
+    /MM_in_points 360 127.0 div def
+    /MMs {MM_in_points mul} def
+
     /relpoint { <<>> begin
     % Input: dx dy
     /dy exch def
@@ -71,12 +74,43 @@ def main(data_filename):
     closepath
     end } bind def
 
+    /blackcolor {0 0 0 setrgbcolor} bind def
     /setDISCcolor {1.0 0.85 0  setrgbcolor} bind def  % Yellow
     /setINVcolor  {0.4 0.4 0.8 setrgbcolor} bind def  % Blue
     /setNATcolor  {0.1 0.8 0.1 setrgbcolor} bind def  % Green
     /setHISTcolor {0.8 0.0 0.0 setrgbcolor} bind def  % Red
     /setTRAVcolor {0.6 0.2 0.6 setrgbcolor} bind def  % Purple
     /setARTcolor  {0.7 0.3 0.0 setrgbcolor} bind def  % Brown
+
+    /drawCard {
+    pstack
+      % Input: x y colorfun toptext toptext2 bottext
+      /bottext exch def
+      /toptext2 exch def
+      /toptext exch def
+      /colorfun exch def
+      /y exch def
+      /x exch def
+
+      x y moveto
+
+      colorfun
+      2 MMs setlinewidth
+      30 MMs 40 MMs 5 MMs % w, h, cornersize
+      roundbox stroke
+
+      blackcolor
+      8 SelectFontSize
+      x 15 MMs add y 34 MMs add moveto
+      toptext center show fill
+
+      x 15 MMs add y 30 MMs add moveto
+      toptext2 center show fill
+
+      10 SelectFontSize
+      x 15 MMs add y 3 MMs add moveto
+      bottext center show fill
+    } bind def
     """
     ps_header(1, defs)
     #cards_test_page()
@@ -142,6 +176,9 @@ def cards_test_page():
     moveto((240+15)*MM, (40+3)*MM); textover("Artefact")
 
 def cards_page(data_filename):
+    coord(10*MM, 10*MM); print "translate"
+
+    row = 0; col = 0
     with open(data_filename) as f:
         for line in f:
             line = line.strip()
@@ -152,17 +189,38 @@ def cards_page(data_filename):
             toks = line.split(":", 4)
             #print "toks: %s" % (toks,)
             toks = map(lambda x: x.strip(), toks)
-            print "toks2: %s" % (toks,)
+            #print "toks2: %s" % (toks,)
             if len(toks)<4:
                 stderr.write("Format error: <%s>\n" % (line,))
                 exit(1)
             catname = toks[0]
             year = toks[1]
             img  = toks[2]
-            text = toks[3]
+            text,text2 = linesplit(toks[3])
+            
             if not CATEGORY.has_key(catname):
                 stderr.write("Unknown category: <%s>\n" % (catname,))
                 exit(1)
             category = CATEGORY[catname]
+            print "%d %d /%s cvx (%s) (%s) (%s) drawCard\n" % (
+                col*40*MM, row*50*MM,
+                category["color"],
+                ps_escape(text),ps_escape(text2),
+                year)
+
+            col = col+1
+            if col>=7:
+                col=0
+                row = row + 1
+
+def ps_escape(s):
+    return s.replace("\\","\n").replace("(","\\050").replace(")","\\051")
+
+def linesplit(s):
+    pos = s.find("\\")
+    if pos >= 0:
+        return (s[0:pos],s[pos+1:])
+    else:
+        return (s,"")
 
 main("cards.dat")
