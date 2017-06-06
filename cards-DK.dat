@@ -1,0 +1,14 @@
+# Format:
+# category : year : image : Description
+INV : 1439 : press.png : Bogtryk
+INV : 1886 : car.png : Bil
+INV : 1876 : telephone.png : Telefon
+INV : 1936 : television.png : Fjernsyn
+INV : 1903 : airplane.png : Flyvemaskine
+
+HIST : 1914-1918 : : Første Verdenskrig
+ART : ca. 2000 fvt : pyramid.png : Egyptiske pyramider
+ART : 1632-1653 : tajmahal.png : Taj Mahal
+
+TRAV : 1492 : america.png : Amerika opdages\(Columbus)
+TRAV : 1522 : globe.png : Jordomsejling\(Magellan)

@@ -23,8 +23,7 @@ def main():
     ps_trailer()
 
 def ps_header():
-    print """
-%!PS-Adobe-3.0
+    print """%!PS-Adobe-3.0
 %%Creator: Timeline drawing script
 %%Title: Timeline-all
 %%Pages: 2
@@ -47,32 +46,6 @@ def ps_header():
 /SelectFontSize {1 dict begin /sz exch def TheFont sz scalefont setfont end} def
 %%EndSetup
 """
-
-
-# %!PS-Adobe-3.0
-# %%Creator: Timeline drawing script
-# %%Title: Timeline-all
-# %%LanguageLevel: 2
-# %%Pages: 1
-# %%PageOrder: Ascend
-# %%BoundingBox: 0 0 842 596
-# %%Orientation: Landscape
-# %%PageOrientation: Landscape
-# %%EndComments
-
-# %%BeginProlog
-# /mm {360 mul 127 div} def
-# /center {dup stringwidth pop -2 div 0 rmoveto} def
-# %%EndProlog
-
-# %%BeginSetup
-# %%Feature: *Resolution 300dpi
-# %%PaperSize: a4
-
-# /TheFont /Helvetica findfont def
-# /SelectFontSize {1 dict begin /sz exch def TheFont sz scalefont setfont end} def
-# %%EndSetup
-#     """
 
 def ps_trailer():
     print "%%EOF"
@@ -136,17 +109,16 @@ def page2():
     # Bottom part of timeline:
     moveto(PART1_XMAX*pw, PART1_Y*ph)
     ymid = (PART1_Y + PART2_MINY) / 2
-    timeline_curve_to_y(PART1_XMAX*pw, PART1_Y*ph, (2000-1500)*scale, -1, ymid*ph)
-    timeline_curve_on_to_y("dummy:dyears", 1, PART2_MINY*ph)
-#    lineto(PART1_XMAX*pw-200*YEAR*scale, PART2_MINY*ph)
-    timeline_curve_to_y(PART1_XMAX*pw-200*YEAR*scale, PART2_MINY*ph,
-                        200*scale, 1,
+    timeline_curve_to_y(PART1_XMAX*pw, PART1_Y*ph, 1500,2000, -1, ymid*ph, scale)
+    curve_on_to_y("dummy:dyears", 1, PART2_MINY*ph)
+    curve_to_y(PART1_XMAX*pw-200*YEAR*scale, PART2_MINY*ph,
+                        200*YEAR*scale, 1,
                         (PART2_MINY+PART2_DELTAY*0.5)*ph)
-    timeline_curve_on_to_y("dummy:dyears", -1, (PART2_MINY+PART2_DELTAY)*ph)
-    timeline_curve_to_y(PART1_XMAX*pw-200*YEAR*scale, (PART2_MINY+PART2_DELTAY)*ph,
-                        300*scale, -1,
+    curve_on_to_y("dummy:dyears", -1, (PART2_MINY+PART2_DELTAY)*ph)
+    curve_to_y(PART1_XMAX*pw-200*YEAR*scale, (PART2_MINY+PART2_DELTAY)*ph,
+                        300*YEAR*scale, -1,
                         (PART2_MINY+PART2_DELTAY*1.5)*ph)
-    timeline_curve_on_to_y("dummy:dyears", 1, (PART2_MINY+PART2_DELTAY*2)*ph)
+    curve_on_to_y("dummy:dyears", 1, (PART2_MINY+PART2_DELTAY*2)*ph)
     stroke()
     for i in range(0,5+1):
         draw_tick((3+0.75)*pw - 100*i*YEAR*scale, 0.5*ph, YEAR_TICK, 0)
@@ -226,14 +198,17 @@ def draw_tick(x,y, ticksize, dir):
 def size(x): print "%.3f " % (x)
 def coord(x,y): print "%.2f %.2f " % (x,y)
 
+def timeline_curve_to_y(x0,y0, t0, t1, xdir, ytarget, scale):
+    curve_to_y(x0,y0, (t1-t0)*YEAR*scale, xdir, ytarget)
+
 # A      B    C D     (x0,y0)=A
 # -------+.......     |CE| = radius = |BC|
 #          \  :       arclen(BE) = BD
 #            +E       |BD| = 1/2*pi*radius = 1/2*pi*radius
 #                     |CD| = |BD|-|BC| = (1/2*pi-1)*radius
-def timeline_curve_to_y(x0,y0, dyears, xdir, ytarget):
+def curve_to_y(x0,y0, length, xdir, ytarget):
     radius = abs(ytarget-y0)
-    xD = x0 + xdir*dyears*YEAR
+    xD = x0 + xdir*length
     # Waypoint = C
     xC = xD - xdir*(pi/2-1)*radius
     yC = y0
@@ -243,12 +218,12 @@ def timeline_curve_to_y(x0,y0, dyears, xdir, ytarget):
     arct(xC, yC, xE, yE, radius)
     gstate.curx = xE; gstate.cury = yE; gstate.cur_radius = radius
 
-def timeline_curve_on_to_y(dyears, xdir, ytarget):
+def curve_on_to_y(dyears, xdir, ytarget):
     # At curx, cury
     arct(gstate.curx,ytarget,
          gstate.curx + xdir * gstate.cur_radius, ytarget,
          gstate.cur_radius)
-#    timeline_curve_to_y(x0,y0, dyears, -xdir, ytarget)
+#    curve_to_y(x0,y0, dyears, -xdir, ytarget)
 
 def ticksize_for(i):
     if i%10 != 0:  return YEAR_TICK

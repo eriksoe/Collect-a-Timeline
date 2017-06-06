@@ -223,4 +223,4 @@ def linesplit(s):
     else:
         return (s,"")
 
-main("cards.dat")
+main("cards-DK.dat")
